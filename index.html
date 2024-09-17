@@ -27,6 +27,10 @@
             from { transform: translateX(-100%); }
             to { transform: translateX(0); }
         }
+        @keyframes slideOutMenu {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
         @keyframes colorChange {
             0% { color: red; }
             25% { color: blue; }
@@ -231,14 +235,14 @@
     <div class="floating-menu" id="floatingMenu">
         <div class="close-menu" onclick="toggleMenu()">×</div>
         <a href="https://rimorawatches.com/">Home</a>
-        <a href="https://rimorawatches.com/collections/best-selling">Shop</a>
+               <a href="https://rimorawatches.com/collections/best-selling">Shop</a>
         <a href="https://rimorawatches.com/apps/track123">Tracking</a>
         <a href="https://rimorawatches.com/pages/about-us-1">About Us</a>
         <div class="copyright">It’s just a fan site. However, it will still direct you to the official site.</div>
     </div>
     <div class="product">
         <div class="discount">-26%</div>
-                <div class="timer" id="timer1">03:00:00</div>
+        <div class="timer" id="timer1">03:00:00</div>
         <img src="https://rimorawatches.com/cdn/shop/files/15_8c424c12-ee54-4778-8cca-8ee09058cfb1.png?v=1725315630&width=1946" alt="McLaren 720S" data-hover="https://rimorawatches.com/cdn/shop/files/16_37f575a9-6099-4858-ac18-bbe19ca5f71f.png?v=1725315630&width=1946">
         <h3>McLaren 720S - RED</h3>
         <p>Rimora Watches</p>
@@ -278,11 +282,16 @@
     <div class="footer">
         <a href="https://www.tiktok.com/@shadow_ff18?_t=8pWw9bERG0u&_r=1">@shadow_ff18</a>
     </div>
+
     <script>
         function toggleMenu() {
             const menu = document.getElementById('floatingMenu');
             if (menu.style.display === 'flex') {
-                menu.style.display = 'none';
+                menu.style.animation = 'slideOutMenu 0.5s ease-in-out';
+                setTimeout(() => {
+                    menu.style.display = 'none';
+                    menu.style.animation = 'slideInMenu 0.5s ease-in-out';
+                }, 500);
             } else {
                 menu.style.display = 'flex';
             }
