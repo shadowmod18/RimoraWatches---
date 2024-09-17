@@ -23,6 +23,17 @@
             40% { transform: translateY(-30px); }
             60% { transform: translateY(-15px); }
         }
+        @keyframes slideInMenu {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes colorChange {
+            0% { color: red; }
+            25% { color: blue; }
+            50% { color: green; }
+            75% { color: orange; }
+            100% { color: red; }
+        }
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -74,24 +85,34 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             z-index: 999;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            animation: slideInMenu 0.5s ease-in-out;
         }
         .floating-menu a {
             text-decoration: none;
             color: white;
             background-color: orange;
-            padding: 10px 20px;
+            padding: 10px 20px; /* Reduced padding */
             margin: 10px;
             border-radius: 5px;
-            font-size: 1.2em;
-            transition: background-color 0.3s ease;
+            font-size: 1.2em; /* Reduced font size */
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         .floating-menu a:hover {
             background-color: #ff9900;
+            transform: scale(1.1);
+        }
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
         }
         .product {
             background-color: rgba(0, 0, 0, 0.7);
@@ -101,7 +122,8 @@
             width: 80%;
             max-width: 250px;
             animation: fadeIn 2.5s ease-in-out, pulse 3s infinite;
-            display: none;
+            position: relative;
+            display: none; /* Hide all products initially */
         }
         .product img {
             width: 100%;
@@ -140,6 +162,29 @@
         .product button:hover {
             background-color: #ff9900;
         }
+        .discount {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .timer {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            border: 2px solid orange;
+        }
         .view-all {
             margin: 20px;
             animation: fadeIn 3s ease-in-out;
@@ -165,6 +210,12 @@
             color: orange;
             font-size: 1em;
         }
+        .copyright {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1em;
+            animation: colorChange 5s infinite;
+        }
     </style>
 </head>
 <body>
@@ -178,40 +229,50 @@
         <h2>WATCHES</h2>
     </div>
     <div class="floating-menu" id="floatingMenu">
+        <div class="close-menu" onclick="toggleMenu()">×</div>
         <a href="https://rimorawatches.com/">Home</a>
         <a href="https://rimorawatches.com/collections/best-selling">Shop</a>
         <a href="https://rimorawatches.com/apps/track123">Tracking</a>
         <a href="https://rimorawatches.com/pages/about-us-1">About Us</a>
+        <div class="copyright">It’s just a fan site. However, it will still direct you to the official site.</div>
     </div>
     <div class="product">
+        <div class="discount">-26%</div>
+                <div class="timer" id="timer1">03:00:00</div>
         <img src="https://rimorawatches.com/cdn/shop/files/15_8c424c12-ee54-4778-8cca-8ee09058cfb1.png?v=1725315630&width=1946" alt="McLaren 720S" data-hover="https://rimorawatches.com/cdn/shop/files/16_37f575a9-6099-4858-ac18-bbe19ca5f71f.png?v=1725315630&width=1946">
         <h3>McLaren 720S - RED</h3>
         <p>Rimora Watches</p>
-        <p class="price">€92.95 <span class="old-price">€125.00</span></p>
+        <p class="price">€91.95 <span class="old-price">€125.00</span></p>
         <a href="https://rimorawatches.com/products/mcleren-720s"><button>Add To Cart</button></a>
     </div>
     <div class="product">
+        <div class="discount">-26%</div>
+        <div class="timer" id="timer2">03:00:00</div>
         <img src="https://rimorawatches.com/cdn/shop/files/123.png?v=1718973205&width=1946" alt="Ferrari 458" data-hover="https://rimorawatches.com/cdn/shop/files/124.png?v=1723094075&width=1946">
         <h3>Ferrari 458 - GREEN</h3>
         <p>Rimora Watches</p>
-        <p class="price">€92.95 <span class="old-price">€125.00</span></p>
+        <p class="price">€91.95 <span class="old-price">€125.00</span></p>
         <a href="https://rimorawatches.com/products/ferrari-459"><button>Add To Cart</button></a>
     </div>
     <div class="product">
+        <div class="discount">-26%</div>
+        <div class="timer" id="timer3">03:00:00</div>
         <img src="https://www.rimora.store/cdn/shop/files/28_1920x1920.png?v=1723388231" alt="LAMBORGHINI HURACAN" data-hover="https://rimorawatches.com/cdn/shop/files/30_1f8d85d0-d0a6-43c2-8271-b3dcc71cce7f.png?v=1725315435&width=1946">
         <h3>LAMBORGHINI H - YELLOW</h3>
         <p>Rimora Watches</p>
-        <p class="price">€92.95 <span class="old-price">€125.00</span></p>
+        <p class="price">€91.95 <span class="old-price">€125.00</span></p>
         <a href="https://rimorawatches.com/products/lamborghini-huracan-1"><button>Add To Cart</button></a>
     </div>
     <div class="product">
+        <div class="discount">-26%</div>
+        <div class="timer" id="timer4">03:00:00</div>
         <img src="https://www.rimora.store/cdn/shop/files/41_1920x1920.png?v=1723388220" alt="NISMO GTR" data-hover="https://rimorawatches.com/cdn/shop/files/42.png?v=1718969155&width=1946">
         <h3>NISMO GTR - ORANGE</h3>
         <p>Rimora Watches</p>
-        <p class="price">€92.95 <span class="old-price">€125.00</span></p>
+        <p class="price">€91.95 <span class="old-price">€125.00</span></p>
         <a href="https://rimorawatches.com/products/nismo-gtr"><button>Add To Cart</button></a>
     </div>
-        <div class="view-all">
+    <div class="view-all">
         <a href="https://rimorawatches.com/collections/shop-by-style">View All</a>
     </div>
     <div class="footer">
@@ -248,6 +309,38 @@
                 img.src = originalSrc;
             });
         });
+
+        function startTimer(duration, display, timerId) {
+            let timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+
+                localStorage.setItem(timerId, timer);
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const threeHours = 60 * 60 * 3;
+            const timers = document.querySelectorAll('.timer');
+            timers.forEach((timer, index) => {
+                const timerId = 'timer' + (index + 1);
+                const savedTime = localStorage.getItem(timerId);
+                const remainingTime = savedTime ? parseInt(savedTime, 10) : threeHours;
+                startTimer(remainingTime, timer, timerId);
+            });
+        };
     </script>
 </body>
 </html>
